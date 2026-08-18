@@ -20,7 +20,16 @@ from src import (actions, data_pipeline as dp, evaluation, explanations,
 # Reads from a hosted URL when NIBSS_DATA_URL is set (used for deployment,
 # since the full dataset is too large for a GitHub repository), otherwise
 # falls back to the local copy used for development.
-DATA_PATH = os.environ.get("NIBSS_DATA_URL", "data/nibss_fraud_dataset.csv")
+def _data_path():
+    try:
+        if "NIBSS_DATA_URL" in st.secrets:
+            return st.secrets["NIBSS_DATA_URL"]
+    except Exception:
+        pass
+    return os.environ.get("NIBSS_DATA_URL", "data/nibss_fraud_dataset.csv")
+
+
+DATA_PATH = _data_path()
 
 st.set_page_config(page_title="Pre-emptive Fraud Mitigation Prototype",
                    layout="wide")
