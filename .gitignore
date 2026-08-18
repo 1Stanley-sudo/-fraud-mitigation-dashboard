@@ -1,6 +1,6 @@
+data/*.csv
 models_store/*.joblib
 __pycache__/
 *.pyc
 .idea/
 .streamlit/secrets.toml
-.trash_placeholder

@@ -8,6 +8,8 @@
 #
 # Run from the terminal: python -m streamlit run app.py
 
+import os
+
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -15,7 +17,10 @@ import streamlit as st
 from src import (actions, data_pipeline as dp, evaluation, explanations,
                  ingest, models, persistence)
 
-DATA_PATH = "data/nibss_fraud_dataset.csv"
+# Reads from a hosted URL when NIBSS_DATA_URL is set (used for deployment,
+# since the full dataset is too large for a GitHub repository), otherwise
+# falls back to the local copy used for development.
+DATA_PATH = os.environ.get("NIBSS_DATA_URL", "data/nibss_fraud_dataset.csv")
 
 st.set_page_config(page_title="Pre-emptive Fraud Mitigation Prototype",
                    layout="wide")
